@@ -1,0 +1,55 @@
+### Variables
+@host = http://localhost:3000
+@contentType = application/json
+
+### Generar JWT manualmente para auth
+### Ejecutar en terminal: node -e "import jwt from 'jsonwebtoken'; console.log(jwt.sign({ sub: 'user-123', role: 'admin' }, 'dev-jwt-secret', { expiresIn: '1h' }))"
+### Luego copiar el token en la variable @token
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c2VyLTEyMyIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTcwMDAwMDAwMH0.EJEMPLO_TOKEN
+
+### PRODUCTOS - Endpoints requeridos por consigna
+
+### 1. POST /api/v1/productos - Crear producto (SIN autenticación)
+POST {{host}}/api/v1/productos
+Content-Type: {{contentType}}
+
+{
+  "producto": "Mouse Inalámbrico",
+  "stockAmount": 5,
+  "fechaIngreso": "2025-12-15"
+}
+
+### 2. GET /api/v1/productos - Listar todos los productos (SIN autenticación)
+GET {{host}}/api/v1/productos
+Accept: {{contentType}}
+
+### 3. GET /api/v1/productos/:id - Obtener producto por id (SIN autenticación)
+# Reemplaza PRODUCTO_ID con el _id devuelto en el POST anterior
+GET {{host}}/api/v1/productos/PRODUCTO_ID
+Accept: {{contentType}}
+
+### 4. PUT /api/v1/productos/:id - Editar producto (CON autenticación JWT)
+# REQUIERE: Authorization: Bearer <token>
+# Reemplaza PRODUCTO_ID y el token en @token
+PUT {{host}}/api/v1/productos/PRODUCTO_ID
+Authorization: Bearer {{token}}
+Content-Type: {{contentType}}
+
+{
+  "stockAmount": 10
+}
+
+### 5. DELETE /api/v1/productos/:id - Eliminar producto (CON autenticación JWT)
+# REQUIERE: Authorization: Bearer <token>
+DELETE {{host}}/api/v1/productos/PRODUCTO_ID
+Authorization: Bearer {{token}}
+Accept: {{contentType}}
+
+### ALBUMS CSV - Descarga y genera CSV
+
+### 6. GET /api/v1/albums/csv - Descargar CSV de albums (SIN autenticación)
+# Consume https://jsonplaceholder.typicode.com/albums
+# Descarga 15 primeros, convierte a CSV (userId,id,title)
+# Guarda en database/albums_15.csv
+GET {{host}}/api/v1/albums/csv
+Accept: text/csv
