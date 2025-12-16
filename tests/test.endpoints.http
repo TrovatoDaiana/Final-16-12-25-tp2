@@ -5,7 +5,7 @@
 ### Generar JWT manualmente para auth
 ### Ejecutar en terminal: node generar-token.js
 ### Luego copiar el token en la variable @token
-@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c2VyLTEyMyIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc2NTkyMzM2OSwiZXhwIjoxNzY1OTI2OTY5fQ.4urqiNck_0wEgAZjwvgDOgkTwIVid5dFmSJIlqUSgug
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c2VyLTEyMyIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc2NTkyNzE5MCwiZXhwIjoxNzY1OTMwNzkwfQ.-Fd6C6CF_x_zd5nFLLqskKHDDcTQI3aabEiPzwm6vM4
 
 ### 1. POST /api/v1/productos - Crear producto (SIN autenticación)
 POST {{host}}/api/v1/productos

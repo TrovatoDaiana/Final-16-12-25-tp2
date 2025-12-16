@@ -28,9 +28,23 @@ export const ProductoRepository = {
 	// Actualiza un producto por id
 	updateOne: async ({ id, producto, stockAmount, fechaIngreso }) => {
 		await mongooseConnection.connect();
+		const update = {};
+		if (producto !== undefined) update.producto = producto;
+		if (stockAmount !== undefined) update.stockAmount = stockAmount;
+		if (fechaIngreso !== undefined) update.fechaIngreso = fechaIngreso;
 		return await ProductoModel.findByIdAndUpdate(
 			id,
-			{ producto, stockAmount, fechaIngreso },
+			update,
+			{ new: true, runValidators: true },
+		).lean();
+	},
+
+	// Incrementa stock de forma atómica
+	incrementStock: async (id, incrementBy) => {
+		await mongooseConnection.connect();
+		return await ProductoModel.findByIdAndUpdate(
+			id,
+			{ $inc: { stockAmount: incrementBy } },
 			{ new: true, runValidators: true },
 		).lean();
 	},

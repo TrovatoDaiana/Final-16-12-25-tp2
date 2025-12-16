@@ -16,6 +16,9 @@ router.get("/:id", ProductoController.getById);
 // Edita producto por id (protegido)
 router.put("/:id", authMiddleware, ProductoController.updateOne);
 
+// Incrementa stock (protegido)
+router.put("/:id/stock", authMiddleware, ProductoController.updateStock);
+
 // Elimina producto por id (protegido)
 router.delete("/:id", authMiddleware, ProductoController.deleteOne);
 

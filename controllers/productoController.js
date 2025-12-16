@@ -130,6 +130,40 @@ export const ProductoController = {
 		}
 	},
 
+		updateStock: async (request, response) => {
+			const { id } = request.params;
+			const { increment } = request.body || {};
+			try {
+				const inc = Number(increment);
+				if (!Number.isInteger(inc) || inc < 1) {
+					return response
+						.status(400)
+						.json({
+							statusCode: 400,
+							error: "increment debe ser un entero mayor o igual a 1",
+						});
+				}
+
+				const actualizado = await ProductoRepositoryMongoose.incrementStock(
+					id,
+					inc,
+				);
+				if (!actualizado) {
+					return response
+						.status(404)
+						.json({ statusCode: 404, error: "Producto no encontrado" });
+				}
+				if (actualizado?.fechaIngreso)
+					actualizado.fechaIngreso = formatYYYYMMDD(actualizado.fechaIngreso);
+				response.json({ code: 200, ok: true, payload: actualizado });
+			} catch (error) {
+				console.log("Error al incrementar stock:", error.message);
+				response
+					.status(500)
+					.json({ statusCode: 500, error: "Error interno del servidor" });
+			}
+		},
+
 	deleteOne: async (request, response) => {
 		const { id } = request.params;
 		try {
