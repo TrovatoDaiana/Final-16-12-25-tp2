@@ -3,11 +3,9 @@
 @contentType = application/json
 
 ### Generar JWT manualmente para auth
-### Ejecutar en terminal: node -e "import jwt from 'jsonwebtoken'; console.log(jwt.sign({ sub: 'user-123', role: 'admin' }, 'dev-jwt-secret', { expiresIn: '1h' }))"
+### Ejecutar en terminal: node generar-token.js
 ### Luego copiar el token en la variable @token
-@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c2VyLTEyMyIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTcwMDAwMDAwMH0.EJEMPLO_TOKEN
-
-### PRODUCTOS - Endpoints requeridos por consigna
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c2VyLTEyMyIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc2NTkyMzM2OSwiZXhwIjoxNzY1OTI2OTY5fQ.4urqiNck_0wEgAZjwvgDOgkTwIVid5dFmSJIlqUSgug
 
 ### 1. POST /api/v1/productos - Crear producto (SIN autenticación)
 POST {{host}}/api/v1/productos
@@ -30,7 +28,7 @@ Accept: {{contentType}}
 
 ### 4. PUT /api/v1/productos/:id - Editar producto (CON autenticación JWT)
 # REQUIERE: Authorization: Bearer <token>
-# Reemplaza PRODUCTO_ID y el token en @token
+# Reemplaza PRODUCTO_ID con el _id devuelto en el POST anterior
 PUT {{host}}/api/v1/productos/PRODUCTO_ID
 Authorization: Bearer {{token}}
 Content-Type: {{contentType}}
@@ -41,6 +39,7 @@ Content-Type: {{contentType}}
 
 ### 5. DELETE /api/v1/productos/:id - Eliminar producto (CON autenticación JWT)
 # REQUIERE: Authorization: Bearer <token>
+# Reemplaza PRODUCTO_ID con el _id devuelto en el POST anterior
 DELETE {{host}}/api/v1/productos/PRODUCTO_ID
 Authorization: Bearer {{token}}
 Accept: {{contentType}}

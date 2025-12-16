@@ -1,5 +1,5 @@
-import mongooseConnection from '../database/mongoose.cnx.js';
-import ProductoModel from '../models/productoModelMongoose.js';
+import mongooseConnection from "../database/mongoose.cnx.js";
+import ProductoModel from "../models/productoModelMongoose.js";
 
 export const ProductoRepository = {
 	// Obtiene todos los productos
@@ -17,7 +17,11 @@ export const ProductoRepository = {
 	// Crea un producto
 	createOne: async ({ producto, stockAmount, fechaIngreso }) => {
 		await mongooseConnection.connect();
-		const doc = await ProductoModel.create({ producto, stockAmount, fechaIngreso });
+		const doc = await ProductoModel.create({
+			producto,
+			stockAmount,
+			fechaIngreso,
+		});
 		return doc.toObject();
 	},
 
@@ -27,7 +31,7 @@ export const ProductoRepository = {
 		return await ProductoModel.findByIdAndUpdate(
 			id,
 			{ producto, stockAmount, fechaIngreso },
-			{ new: true, runValidators: true }
+			{ new: true, runValidators: true },
 		).lean();
 	},
 
